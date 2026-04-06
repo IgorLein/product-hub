@@ -1,18 +1,15 @@
-import dotenv from 'dotenv';
+import { Sequelize } from 'sequelize';
+import { env } from './env.js';
 
-dotenv.config();
+const sequelize = new Sequelize(env.databaseUrl, {
+  dialect: 'postgres',
+  logging: false,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
+});
 
-function getRequiredEnv(name: string): string {
-  const value = process.env[name];
-
-  if (!value) {
-    throw new Error(`Missing required environment variable: ${name}`);
-  }
-
-  return value;
-}
-
-export const env = {
-  port: Number(process.env.PORT) || 3001,
-  databaseUrl: getRequiredEnv('DATABASE_URL'),
-};
+export default sequelize;
