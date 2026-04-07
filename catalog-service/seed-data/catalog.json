@@ -1,0 +1,262 @@
+{
+	"categories": [
+		{ "key": "laptops", "name": "Laptops" },
+		{ "key": "phones", "name": "Phones" },
+		{ "key": "accessories", "name": "Accessories" },
+		{ "key": "tablets", "name": "Tablets" },
+		{ "key": "audio", "name": "Audio" },
+		{ "key": "wearables", "name": "Wearables" }
+	],
+	"tags": [
+		{ "key": "new", "name": "New" },
+		{ "key": "sale", "name": "Sale" },
+		{ "key": "premium", "name": "Premium" },
+		{ "key": "popular", "name": "Popular" },
+		{ "key": "compact", "name": "Compact" },
+		{ "key": "business", "name": "Business" },
+		{ "key": "gaming", "name": "Gaming" },
+		{ "key": "wireless", "name": "Wireless" }
+	],
+	"products": [
+		{
+			"name": "MacBook Pro 14",
+			"description": "Apple laptop with M-series chip",
+			"price": 2500,
+			"categoryKey": "laptops",
+			"imageFileName": "macbook-pro-14.svg",
+			"tagKeys": ["new", "premium", "business"]
+		},
+		{
+			"name": "Dell XPS 13",
+			"description": "Compact ultrabook for work and travel",
+			"price": 1650,
+			"categoryKey": "laptops",
+			"imageFileName": "dell-xps-13.svg",
+			"tagKeys": ["compact", "business", "popular"]
+		},
+		{
+			"name": "Lenovo ThinkPad X1 Carbon",
+			"description": "Lightweight business laptop with long battery life",
+			"price": 1890,
+			"categoryKey": "laptops",
+			"imageFileName": "thinkpad-x1-carbon.svg",
+			"tagKeys": ["business", "premium"]
+		},
+		{
+			"name": "ASUS ROG Zephyrus G14",
+			"description": "Portable gaming laptop with powerful graphics",
+			"price": 2100,
+			"categoryKey": "laptops",
+			"imageFileName": "asus-rog-zephyrus-g14.svg",
+			"tagKeys": ["gaming", "premium", "popular"]
+		},
+		{
+			"name": "HP Spectre x360",
+			"description": "Convertible laptop with touch display",
+			"price": 1720,
+			"categoryKey": "laptops",
+			"imageFileName": "hp-spectre-x360.svg",
+			"tagKeys": ["new", "premium", "compact"]
+		},
+		{
+			"name": "Acer Swift Go 14",
+			"description": "Slim everyday laptop for study and office tasks",
+			"price": 980,
+			"categoryKey": "laptops",
+			"imageFileName": "acer-swift-go-14.svg",
+			"tagKeys": ["sale", "compact"]
+		},
+		{
+			"name": "iPhone 15",
+			"description": "Apple smartphone",
+			"price": 1200,
+			"categoryKey": "phones",
+			"imageFileName": "iphone-15.svg",
+			"tagKeys": ["new", "sale", "popular"]
+		},
+		{
+			"name": "Samsung Galaxy S24",
+			"description": "Flagship Android phone with bright AMOLED display",
+			"price": 1100,
+			"categoryKey": "phones",
+			"imageFileName": "samsung-galaxy-s24.svg",
+			"tagKeys": ["new", "premium"]
+		},
+		{
+			"name": "Google Pixel 9",
+			"description": "Android phone with advanced camera features",
+			"price": 999,
+			"categoryKey": "phones",
+			"imageFileName": "google-pixel-9.svg",
+			"tagKeys": ["new", "popular", "compact"]
+		},
+		{
+			"name": "OnePlus 12",
+			"description": "Fast charging smartphone with smooth performance",
+			"price": 899,
+			"categoryKey": "phones",
+			"imageFileName": "oneplus-12.svg",
+			"tagKeys": ["sale", "popular"]
+		},
+		{
+			"name": "Nothing Phone 2",
+			"description": "Distinctive smartphone with minimalist design",
+			"price": 749,
+			"categoryKey": "phones",
+			"imageFileName": "nothing-phone-2.svg",
+			"tagKeys": ["compact", "new"]
+		},
+		{
+			"name": "Xiaomi 14",
+			"description": "High-performance smartphone with Leica optics",
+			"price": 860,
+			"categoryKey": "phones",
+			"imageFileName": "xiaomi-14.svg",
+			"tagKeys": ["premium", "sale"]
+		},
+		{
+			"name": "iPad Air 13",
+			"description": "Large tablet for media, drawing, and productivity",
+			"price": 980,
+			"categoryKey": "tablets",
+			"imageFileName": "ipad-air-13.svg",
+			"tagKeys": ["new", "premium", "popular"]
+		},
+		{
+			"name": "Samsung Galaxy Tab S9",
+			"description": "Android tablet with AMOLED screen and stylus",
+			"price": 930,
+			"categoryKey": "tablets",
+			"imageFileName": "galaxy-tab-s9.svg",
+			"tagKeys": ["premium", "business"]
+		},
+		{
+			"name": "Lenovo Tab P12",
+			"description": "Versatile tablet for streaming and web browsing",
+			"price": 430,
+			"categoryKey": "tablets",
+			"imageFileName": "lenovo-tab-p12.svg",
+			"tagKeys": ["sale", "popular"]
+		},
+		{
+			"name": "Microsoft Surface Pro 10",
+			"description": "2-in-1 tablet for professional workflows",
+			"price": 1590,
+			"categoryKey": "tablets",
+			"imageFileName": "surface-pro-10.svg",
+			"tagKeys": ["business", "premium", "new"]
+		},
+		{
+			"name": "Sony WH-1000XM5",
+			"description": "Noise-cancelling wireless headphones",
+			"price": 399,
+			"categoryKey": "audio",
+			"imageFileName": "sony-wh-1000xm5.svg",
+			"tagKeys": ["wireless", "premium", "popular"]
+		},
+		{
+			"name": "Apple AirPods Pro 2",
+			"description": "Wireless earbuds with active noise cancellation",
+			"price": 279,
+			"categoryKey": "audio",
+			"imageFileName": "airpods-pro-2.svg",
+			"tagKeys": ["wireless", "new", "premium"]
+		},
+		{
+			"name": "JBL Charge 5",
+			"description": "Portable Bluetooth speaker with strong bass",
+			"price": 179,
+			"categoryKey": "audio",
+			"imageFileName": "jbl-charge-5.svg",
+			"tagKeys": ["wireless", "sale", "popular"]
+		},
+		{
+			"name": "Marshall Emberton II",
+			"description": "Compact speaker with signature Marshall design",
+			"price": 199,
+			"categoryKey": "audio",
+			"imageFileName": "marshall-emberton-ii.svg",
+			"tagKeys": ["wireless", "compact", "premium"]
+		},
+		{
+			"name": "Bose QuietComfort Ultra",
+			"description": "Premium over-ear headphones for immersive listening",
+			"price": 429,
+			"categoryKey": "audio",
+			"imageFileName": "bose-quietcomfort-ultra.svg",
+			"tagKeys": ["premium", "wireless", "new"]
+		},
+		{
+			"name": "Apple Watch Series 10",
+			"description": "Smartwatch with health and fitness tracking",
+			"price": 499,
+			"categoryKey": "wearables",
+			"imageFileName": "apple-watch-series-10.svg",
+			"tagKeys": ["new", "popular", "premium"]
+		},
+		{
+			"name": "Samsung Galaxy Watch 7",
+			"description": "Wear OS smartwatch with wellness insights",
+			"price": 379,
+			"categoryKey": "wearables",
+			"imageFileName": "galaxy-watch-7.svg",
+			"tagKeys": ["new", "wireless"]
+		},
+		{
+			"name": "Garmin Venu 3",
+			"description": "Fitness smartwatch with advanced workout metrics",
+			"price": 449,
+			"categoryKey": "wearables",
+			"imageFileName": "garmin-venu-3.svg",
+			"tagKeys": ["premium", "popular"]
+		},
+		{
+			"name": "Fitbit Charge 6",
+			"description": "Compact activity tracker for daily health monitoring",
+			"price": 189,
+			"categoryKey": "wearables",
+			"imageFileName": "fitbit-charge-6.svg",
+			"tagKeys": ["compact", "sale", "popular"]
+		},
+		{
+			"name": "Logitech MX Master 3S",
+			"description": "Wireless productivity mouse for creative work",
+			"price": 119,
+			"categoryKey": "accessories",
+			"imageFileName": "logitech-mx-master-3s.svg",
+			"tagKeys": ["wireless", "business", "popular"]
+		},
+		{
+			"name": "Keychron K8 Pro",
+			"description": "Mechanical keyboard with wireless connectivity",
+			"price": 129,
+			"categoryKey": "accessories",
+			"imageFileName": "keychron-k8-pro.svg",
+			"tagKeys": ["wireless", "popular"]
+		},
+		{
+			"name": "Anker 737 Power Bank",
+			"description": "High-capacity portable charger for multiple devices",
+			"price": 149,
+			"categoryKey": "accessories",
+			"imageFileName": "anker-737-power-bank.svg",
+			"tagKeys": ["new", "popular"]
+		},
+		{
+			"name": "Belkin 3-in-1 MagSafe Stand",
+			"description": "Charging stand for phone, watch, and earbuds",
+			"price": 159,
+			"categoryKey": "accessories",
+			"imageFileName": "belkin-3-in-1-magsafe-stand.svg",
+			"tagKeys": ["premium", "wireless"]
+		},
+		{
+			"name": "Razer Kiyo Pro",
+			"description": "Streaming webcam with adaptive light sensor",
+			"price": 199,
+			"categoryKey": "accessories",
+			"imageFileName": "razer-kiyo-pro.svg",
+			"tagKeys": ["gaming", "sale"]
+		}
+	]
+}

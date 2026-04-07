@@ -3,7 +3,13 @@ import { Product } from './product.model.js';
 import { ProductTag } from './productTag.model.js';
 import { Tag } from './tag.model.js';
 
+let modelsInitialized = false;
+
 export function initModels(): void {
+  if (modelsInitialized) {
+    return;
+  }
+
   Category.hasMany(Product, {
     foreignKey: 'categoryId',
     as: 'products',
@@ -37,6 +43,8 @@ export function initModels(): void {
     foreignKey: 'tagId',
     as: 'tag',
   });
+
+  modelsInitialized = true;
 }
 
 export { Category, Product, ProductTag, Tag };
