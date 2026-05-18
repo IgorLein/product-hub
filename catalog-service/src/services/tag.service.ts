@@ -1,4 +1,4 @@
-import { Tag } from '../models/tag.model.js';
+import { Tag, TagCreationAttributes } from '../models/tag.model.js';
 import { TagDto, mapTagToDto } from '../mappers/tag.mapper.js';
 import { Category, Product } from '../models/index.js';
 import { buildPaginatedResponse, PaginatedResponse, PaginationParams } from '../utils/pagination.js';
@@ -55,4 +55,24 @@ export async function getTagsByCategoryKey(categoryKey: string): Promise<TagDto[
   });
 
   return tags.map(mapTagToDto);
+}
+
+export async function addTag(tagData: TagCreationAttributes): Promise<TagDto> {
+  const tag = await Tag.create(tagData);
+  return mapTagToDto(tag);
+}
+
+export async function deleteTag(tagId: number): Promise<void> {
+  await Tag.destroy({ where: { id: tagId } });
+}
+
+export async function updateTag(tagId: number, tagData: Partial<TagCreationAttributes>): Promise<TagDto | null> {
+  const tag = await Tag.findByPk(tagId);
+
+  if (!tag) {
+    return null;
+  }
+
+  await tag.update(tagData);
+  return mapTagToDto(tag);
 }
