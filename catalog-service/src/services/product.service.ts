@@ -2,17 +2,18 @@ import { mapProductToDto, ProductDto } from "../mappers/product.mapper.js";
 import { Category } from "../models/category.model.js";
 import { Product } from "../models/product.model.js";
 import { Tag } from "../models/tag.model.js";
+import { buildPaginatedResponse, PaginatedResponse, PaginationParams } from "../utils/pagination.js";
 
 type GetProductsQuery = {
   category?: string;
   tag?: string;
-};
+} & PaginationParams;
 
-export async function getProducts(query: GetProductsQuery): Promise<ProductDto[]> {
+export async function getProducts(query: GetProductsQuery): Promise<PaginatedResponse<ProductDto>> {
   const categoryWhere = query.category ? { key: query.category } : undefined;
   const tagWhere = query.tag ? { key: query.tag } : undefined;
 
-  const products = await Product.findAll({
+  const { rows: products, count: totalItems } = await Product.findAndCountAll({
     include: [
       {
         model: Category,
@@ -29,9 +30,16 @@ export async function getProducts(query: GetProductsQuery): Promise<ProductDto[]
       },
     ],
     order: [['id', 'ASC']],
+    limit: query.limit,
+    offset: query.offset,
+    distinct: true,
   });
 
-  return products.map(mapProductToDto);
+  return buildPaginatedResponse(products.map(mapProductToDto), {
+    page: query.page,
+    limit: query.limit,
+    totalItems,
+  });
 }
 
 export async function getProductById(id: number): Promise<ProductDto | null> {

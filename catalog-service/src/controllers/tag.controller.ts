@@ -1,13 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 import * as tagService from '../services/tag.service.js';
+import { getPaginationParams } from "../utils/pagination.js";
 
 export async function getTags(
-  _req: Request,
+  req: Request,
   res: Response,
   next: NextFunction,
 ) {
   try {
-    const tags = await tagService.getTags();
+    const paginationParams = getPaginationParams(req.query);
+    const tags = await tagService.getTags(paginationParams);
     res.status(200).json(tags);
   } catch (error) {
     next(error);

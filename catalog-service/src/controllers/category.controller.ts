@@ -1,14 +1,17 @@
 import { Request, Response, NextFunction } from "express";
 import * as categoryService from '../services/category.service.js';
 import * as tagService from '../services/tag.service.js';
+import { getPaginationParams } from '../utils/pagination.js';
 
 export async function getCategories(
-  _req: Request,
+  req: Request,
   res: Response,
   next: NextFunction,
 ) {
   try {
-    const categories = await categoryService.getCategories();
+    const paginationParams = getPaginationParams(req.query);
+
+    const categories = await categoryService.getCategories(paginationParams);
     res.status(200).json(categories);
   } catch (error) {
     next(error);

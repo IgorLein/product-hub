@@ -1,13 +1,20 @@
 import { Tag } from '../models/tag.model.js';
 import { TagDto, mapTagToDto } from '../mappers/tag.mapper.js';
 import { Category, Product } from '../models/index.js';
+import { buildPaginatedResponse, PaginatedResponse, PaginationParams } from '../utils/pagination.js';
 
-export async function getTags(): Promise<TagDto[]> {
-  const tags = await Tag.findAll({
+export async function getTags(query: PaginationParams): Promise<PaginatedResponse<TagDto>> {
+  const { rows: tags, count: totalItems } = await Tag.findAndCountAll({
     order: [["id", "ASC"]],
+    limit: query.limit,
+    offset: query.offset,
   });
 
-  return tags.map(mapTagToDto);
+  return buildPaginatedResponse(tags.map(mapTagToDto), {
+    page: query.page,
+    limit: query.limit,
+    totalItems,
+  });
 };
 
 export async function getTagsByProductId(productId: number): Promise<TagDto[]> {

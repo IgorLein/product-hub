@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import * as productService from '../services/product.service.js';
+import { getPaginationParams } from '../utils/pagination.js';
 
 export async function getProducts(
   req: Request,
@@ -9,8 +10,9 @@ export async function getProducts(
   try {
     const category = typeof req.query.category === 'string' ? req.query.category : undefined;
     const tag = typeof req.query.tag === 'string' ? req.query.tag : undefined;
+    const paginationParams = getPaginationParams(req.query);
 
-    const products = await productService.getProducts({ category, tag });
+    const products = await productService.getProducts({ category, tag, ...paginationParams });
     res.status(200).json(products);
   } catch (error) {
     next(error);
