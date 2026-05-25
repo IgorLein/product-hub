@@ -15,6 +15,10 @@ export type CreationProductData = ProductCreationAttributes & {
   tagIds?: number[];
 };
 
+export type CreationProductDataWithTags = ProductCreationAttributes & {
+  tagKeys?: string[];
+};
+
 export async function getProducts(query: GetProductsQuery): Promise<PaginatedResponse<ProductDto>> {
   const categoryWhere = query.category ? { key: query.category } : undefined;
   const tagWhere = query.tag ? { key: query.tag } : undefined;
@@ -103,4 +107,48 @@ export async function createProduct(productData: CreationProductData): Promise<P
 
     return mapProductToDto(createdProduct);
   });
-}
+};
+
+export async function createProductWithTags(productData: CreationProductDataWithTags): Promise<ProductDto> {
+  return await sequelize.transaction(async (transaction) => {
+    const { tagKeys, ...productFields } = productData;
+
+    const product = await Product.create(productFields, { transaction });
+
+    if (tagKeys && tagKeys.length > 0) {
+      const uniqueTagKeys = [...new Set(tagKeys)];
+
+      const tags = await Tag.findAll({
+        where: { key: uniqueTagKeys },
+        transaction,
+      });
+
+      if (tags.length !== uniqueTagKeys.length) {
+        throw new Error('Some tags were not found');
+      }
+
+      await product.setTags(tags, { transaction });
+    }
+
+    const createdProduct = await Product.findByPk(product.id, {
+      include: [
+        {
+          model: Category,
+          as: 'category',
+        },
+        {
+          model: Tag,
+          as: 'tags',
+          through: { attributes: [] },
+        },
+      ],
+      transaction,
+    });
+
+    if (!createdProduct) {
+      throw new Error('Created product not found');
+    }
+
+    return mapProductToDto(createdProduct);
+  });
+};

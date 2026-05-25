@@ -19,8 +19,6 @@ export class ProductTag
   declare id: number;
   declare productId: number;
   declare tagId: number;
-  declare createdAt: Date;
-  declare updatedAt: Date;
 }
 
 ProductTag.init(
@@ -45,14 +43,6 @@ ProductTag.init(
         model: 'tags',
         key: 'id',
       },
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
     },
   },
   {

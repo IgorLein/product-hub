@@ -13,4 +13,6 @@ router.get('/:id/tags', tagController.getTagsByProductId);
 
 router.post('/', upload.single('image'), productController.createProduct);
 
+router.post('/with-tags', upload.single('image'), productController.createProductWithTags);
+
 export default router;

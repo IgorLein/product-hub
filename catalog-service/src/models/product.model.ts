@@ -1,5 +1,13 @@
-import { DataTypes, Model, Optional } from 'sequelize';
+import {
+  DataTypes,
+  Model,
+  Optional,
+  BelongsToManyAddAssociationsMixin,
+  BelongsToManyGetAssociationsMixin,
+  BelongsToManySetAssociationsMixin,
+} from 'sequelize';
 import sequelize from '../config/db.js';
+import { Tag } from './tag.model.js';
 
 export interface ProductAttributes {
   id: number;
@@ -29,6 +37,12 @@ export class Product
   declare categoryId: number;
   declare createdAt: Date;
   declare updatedAt: Date;
+
+  declare getTags: BelongsToManyGetAssociationsMixin<Tag>;
+
+  declare setTags: BelongsToManySetAssociationsMixin<Tag, number>;
+
+  declare addTags: BelongsToManyAddAssociationsMixin<Tag, number>;
 }
 
 Product.init(
