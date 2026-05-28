@@ -25,3 +25,12 @@ export async function saveProductImage(file: Express.Multer.File): Promise<Saved
     imageUrl: `/products/${imageFileName}`,
   };
 };
+
+export async function deleteProductImage(imageFileName: string): Promise<void> {
+  const filePath = path.join(process.cwd(), 'public/products', imageFileName);
+  try {
+    await fs.unlink(filePath);
+  } catch (error) {
+    console.error(`Failed to delete product image "${imageFileName}":`, error);
+  }
+};

@@ -104,3 +104,22 @@ export async function createProductWithTags(
     next(error);
   }
 }
+
+export async function deleteProduct(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const id = Number(req.params.id);
+    if (isNaN(id)) {
+      res.status(400).json({ message: 'Invalid product ID' });
+      return;
+    }
+
+    await productService.deleteProduct(id);
+    res.status(204).send();
+  } catch (error) {
+    next(error);
+  }
+};

@@ -5,6 +5,7 @@ import { Product, ProductCreationAttributes } from "../models/product.model.js";
 import { ProductTag } from "../models/productTag.model.js";
 import { Tag } from "../models/tag.model.js";
 import { buildPaginatedResponse, PaginatedResponse, PaginationParams } from "../utils/pagination.js";
+import * as productFileService from "./productFile.service.js";
 
 type GetProductsQuery = {
   category?: string;
@@ -151,4 +152,19 @@ export async function createProductWithTags(productData: CreationProductDataWith
 
     return mapProductToDto(createdProduct);
   });
+};
+
+export async function deleteProduct(productId: number): Promise<void> {
+  const product = await Product.findByPk(productId);
+
+  if (!product) {
+    throw new Error('Product not found');
+  }
+
+  await sequelize.transaction(async (transaction) => {
+    await ProductTag.destroy({ where: { productId }, transaction });
+    await product.destroy({ transaction });
+  });
+
+  await productFileService.deleteProductImage(product.imageFileName);
 };

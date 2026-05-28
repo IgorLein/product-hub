@@ -15,4 +15,6 @@ router.post('/', upload.single('image'), productController.createProduct);
 
 router.post('/with-tags', upload.single('image'), productController.createProductWithTags);
 
+router.delete('/:id', productController.deleteProduct);
+
 export default router;
