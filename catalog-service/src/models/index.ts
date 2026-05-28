@@ -25,6 +25,7 @@ export function initModels(): void {
     foreignKey: 'productId',
     otherKey: 'tagId',
     as: 'tags',
+    onDelete: 'CASCADE',
   });
 
   Tag.belongsToMany(Product, {
@@ -32,16 +33,19 @@ export function initModels(): void {
     foreignKey: 'tagId',
     otherKey: 'productId',
     as: 'products',
+    onDelete: 'CASCADE',
   });
 
   ProductTag.belongsTo(Product, {
     foreignKey: 'productId',
     as: 'product',
+    onDelete: 'CASCADE',
   });
 
   ProductTag.belongsTo(Tag, {
     foreignKey: 'tagId',
     as: 'tag',
+    onDelete: 'CASCADE',
   });
 
   modelsInitialized = true;
