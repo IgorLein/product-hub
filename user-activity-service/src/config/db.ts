@@ -1,4 +1,8 @@
+import mongoose from 'mongoose';
+import { env } from './env';
+
 export async function connectToDatabase(): Promise<void> {
-  // TODO: implement DB connection (e.g. mongoose, pg)
-  console.log('connectDB: placeholder - implement connection logic');
+  await mongoose.connect(env.mongoUri);
+
+  console.log('MongoDB connection established successfully.');
 }

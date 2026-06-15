@@ -1,12 +1,46 @@
-import { UserActivity } from '../types/userActivity.types';
+import mongoose, { Schema } from 'mongoose';
 
-// Placeholder model representation
-export type UserActivityModel = UserActivity;
+const recentlyViewedSchema = new Schema(
+  {
+    productId: {
+      type: Number,
+      required: true,
+    },
+    viewedAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  {
+    _id: false,
+  }
+);
 
-export const createEmptyActivity = (): UserActivityModel => ({
-  id: '',
-  userId: '',
-  type: 'view',
-  payload: {},
-  createdAt: new Date().toISOString(),
-});
+const userActivitySchema = new Schema(
+  {
+    userId: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
+    },
+
+    favorites: {
+      type: [Number],
+      default: [],
+    },
+
+    recentlyViewed: {
+      type: [recentlyViewedSchema],
+      default: [],
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+export const UserActivity = mongoose.model(
+  'UserActivity',
+  userActivitySchema
+);

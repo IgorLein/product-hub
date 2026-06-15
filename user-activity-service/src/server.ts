@@ -5,7 +5,6 @@ import { env } from './config/env';
 async function start(): Promise<void> {
   try {
     await connectToDatabase();
-    console.log('MongoDB connection established successfully.');
 
     app.listen(env.port, () => {
       console.log(`User activity service is running on port ${env.port}`);

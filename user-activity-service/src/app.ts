@@ -7,6 +7,12 @@ import { notFoundHandler } from './middlewares/notFoundHandler';
 
 const app = express();
 
+// Log incoming requests for debugging
+app.use((req, _res, next) => {
+  console.log(`[request] ${req.method} ${req.originalUrl}`);
+  next();
+});
+
 app.use(cors());
 app.use(express.json());
 
