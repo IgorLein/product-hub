@@ -36,3 +36,27 @@ export async function getFavorites(req: Request, res: Response) {
   const result = await favoriteService.getFavorites(userId);
   res.json(result);
 }
+
+export async function removeFavorite(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const userId = (req.params.userId || req.query.userId) as string | undefined;
+    const productId = req.body.productId as string | undefined;
+
+    if (!userId) {
+      return res.status(400).json({ error: 'Missing userId (path param or query param)'});
+    }
+
+    if (!productId) {
+      return res.status(400).json({ error: 'Missing productId in request body' });
+    }
+
+    await favoriteService.removeFavorite(userId, productId);
+    res.status(200).json({ message: 'Favorite removed successfully' });
+  } catch (error) {
+    next(error);
+  }
+}
