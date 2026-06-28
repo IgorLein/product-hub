@@ -1,7 +1,7 @@
-import { UserActivity } from '../models/userActivity.model';
+import { Favorite } from '../models/favorite.model';
 
 export async function addFavorite(userId: string, productId: string): Promise<void> {
-  await UserActivity.findOneAndUpdate(
+  await Favorite.findOneAndUpdate(
     {
       userId,
     },
@@ -13,11 +13,11 @@ export async function addFavorite(userId: string, productId: string): Promise<vo
 }
 
 export async function getFavorites(userId: string) {
-  return await UserActivity.findOne({ userId }).select('favorites -_id').lean();
+  return await Favorite.findOne({ userId }).select('favorites -_id').lean();
 }
 
 export async function removeFavorite(userId: string, productId: string): Promise<void> {
-  await UserActivity.updateOne(
+  await Favorite.updateOne(
     {
       userId,
     },
