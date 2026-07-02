@@ -10,11 +10,16 @@ export async function getProducts(
   next: NextFunction,
 ) {
   try {
+    const ids = typeof req.query.ids === 'string'
+      ? req.query.ids.split(',')
+        .map((id) => parseInt(id, 10))
+        .filter((id) => Number.isInteger(id) && id > 0)
+      : undefined;
     const category = typeof req.query.category === 'string' ? req.query.category : undefined;
     const tag = typeof req.query.tag === 'string' ? req.query.tag : undefined;
     const paginationParams = getPaginationParams(req.query);
 
-    const products = await productService.getProducts({ category, tag, ...paginationParams });
+    const products = await productService.getProducts({ ids, category, tag, ...paginationParams });
     res.status(200).json(products);
   } catch (error) {
     next(error);

@@ -8,6 +8,7 @@ import { buildPaginatedResponse, PaginatedResponse, PaginationParams } from "../
 import * as productFileService from "./productFile.service.js";
 
 type GetProductsQuery = {
+  ids?: number[];
   category?: string;
   tag?: string;
 } & PaginationParams;
@@ -23,6 +24,7 @@ export type CreationProductDataWithTags = ProductCreationAttributes & {
 export async function getProducts(query: GetProductsQuery): Promise<PaginatedResponse<ProductDto>> {
   const categoryWhere = query.category ? { key: query.category } : undefined;
   const tagWhere = query.tag ? { key: query.tag } : undefined;
+  const idsWhere = query.ids ? { id: query.ids } : undefined;
 
   const { rows: products, count: totalItems } = await Product.findAndCountAll({
     include: [
@@ -44,6 +46,7 @@ export async function getProducts(query: GetProductsQuery): Promise<PaginatedRes
     limit: query.limit,
     offset: query.offset,
     distinct: true,
+    where: idsWhere,
   });
 
   return buildPaginatedResponse(products.map(mapProductToDto), {
