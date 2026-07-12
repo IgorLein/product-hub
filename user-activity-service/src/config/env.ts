@@ -15,4 +15,5 @@ function getRequiredEnv(name: string): string {
 export const env = {
   port: Number(process.env.PORT) || 3002,
   mongoUri: getRequiredEnv('MONGO_URI'),
+  catalogServiceUrl: getRequiredEnv('CATALOG_SERVICE_URL'),
 };
