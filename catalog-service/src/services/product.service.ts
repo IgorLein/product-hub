@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import sequelize from "../config/db.js";
 import { mapProductToDto, ProductDto } from "../mappers/product.mapper.js";
 import { Category } from "../models/category.model.js";
@@ -6,11 +7,13 @@ import { ProductTag } from "../models/productTag.model.js";
 import { Tag } from "../models/tag.model.js";
 import { buildPaginatedResponse, PaginatedResponse, PaginationParams } from "../utils/pagination.js";
 import * as productFileService from "./productFile.service.js";
+import { WhereOptions } from "sequelize/lib/model";
 
 type GetProductsQuery = {
   ids?: number[];
-  category?: string;
-  tag?: string;
+  categories?: string[];
+  tags?: string[];
+  excludeIds?: number[];
 } & PaginationParams;
 
 export type CreationProductData = ProductCreationAttributes & {
@@ -22,9 +25,22 @@ export type CreationProductDataWithTags = ProductCreationAttributes & {
 };
 
 export async function getProducts(query: GetProductsQuery): Promise<PaginatedResponse<ProductDto>> {
-  const categoryWhere = query.category ? { key: query.category } : undefined;
-  const tagWhere = query.tag ? { key: query.tag } : undefined;
-  const idsWhere = query.ids ? { id: query.ids } : undefined;
+  const categoryWhere = query.categories?.length ? { key: { [Op.in]: query.categories } } : undefined;
+  const tagWhere = query.tags?.length ? { key: { [Op.in]: query.tags } } : undefined;
+  const productWhere: WhereOptions = {};
+  const idConditions: Record<symbol, number[]> = {};
+
+  if (query.ids?.length) {
+    idConditions[Op.in] = query.ids;
+  }
+
+  if (query.excludeIds?.length) {
+    idConditions[Op.notIn] = query.excludeIds;
+  }
+
+  if (Object.getOwnPropertySymbols(idConditions).length > 0) {
+    productWhere.id = idConditions;
+  }
 
   const { rows: products, count: totalItems } = await Product.findAndCountAll({
     include: [
@@ -46,7 +62,7 @@ export async function getProducts(query: GetProductsQuery): Promise<PaginatedRes
     limit: query.limit,
     offset: query.offset,
     distinct: true,
-    where: idsWhere,
+    where: { ...productWhere },
   });
 
   return buildPaginatedResponse(products.map(mapProductToDto), {

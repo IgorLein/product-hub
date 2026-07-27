@@ -3,7 +3,7 @@ import { Product } from '../models/product.model.js';
 import { Category } from '../models/category.model.js';
 import { CategoryDto, mapCategoryToDto } from './category.mapper.js';
 
-type TagDto = {
+export type TagDto = {
   id: number;
   key: string;
   name: string;

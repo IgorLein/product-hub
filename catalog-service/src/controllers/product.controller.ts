@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import * as productService from '../services/product.service.js';
 import * as productFileService from '../services/productFile.service.js';
 import { getPaginationParams } from '../utils/pagination.js';
+import { parseArrayParam, parseNumberArrayParam } from '../utils/query.js';
 import { CreationProductData, CreationProductDataWithTags } from '../services/product.service.js';
 
 export async function getProducts(
@@ -10,16 +11,13 @@ export async function getProducts(
   next: NextFunction,
 ) {
   try {
-    const ids = typeof req.query.ids === 'string'
-      ? req.query.ids.split(',')
-        .map((id) => parseInt(id, 10))
-        .filter((id) => Number.isInteger(id) && id > 0)
-      : undefined;
-    const category = typeof req.query.category === 'string' ? req.query.category : undefined;
-    const tag = typeof req.query.tag === 'string' ? req.query.tag : undefined;
+    const ids = parseNumberArrayParam(req.query.ids);
+    const excludeIds = parseNumberArrayParam(req.query.excludeIds);
+    const categories = parseArrayParam(req.query.categories);
+    const tags = parseArrayParam(req.query.tags);
     const paginationParams = getPaginationParams(req.query);
 
-    const products = await productService.getProducts({ ids, category, tag, ...paginationParams });
+    const products = await productService.getProducts({ ids, excludeIds, categories, tags, ...paginationParams });
     res.status(200).json(products);
   } catch (error) {
     next(error);
@@ -69,14 +67,14 @@ export async function createProduct(
     categoryId: parseInt(req.body.categoryId, 10),
     imageFileName: savedImage.imageFileName,
     imageUrl: savedImage.imageUrl,
-    tagIds: req.body.tagIds ? req.body.tagIds.split(',').map((id: string) => parseInt(id, 10)) : [],
+    tagIds: parseNumberArrayParam(req.body.tagIds) || [],
   };
 
   try {
     const createdProduct = await productService.createProduct(productData);
     res.status(201).json(createdProduct);
   } catch (error) {
-    res.status(500).json({ message: 'Error creating product' });
+    next(error);
   }
 }
 
@@ -99,7 +97,7 @@ export async function createProductWithTags(
     categoryId: parseInt(req.body.categoryId, 10),
     imageFileName: savedImage.imageFileName,
     imageUrl: savedImage.imageUrl,
-    tagKeys: req.body.tagKeys ? req.body.tagKeys.split(',') : [],
+    tagKeys: parseArrayParam(req.body.tagKeys) || [],
   };
 
   try {
